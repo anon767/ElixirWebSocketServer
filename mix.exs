@@ -1,43 +1,26 @@
-defmodule BinaryDataOverPhoenixSocket.Mixfile do
+defmodule Socket.Mixfile do
   use Mix.Project
 
   def project do
-    [
-      app: :binary_data_over_phoenix_socket,
-      version: "0.0.1",
-      elixir: "~> 1.4",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
-      deps: deps()
-    ]
+    [ app: :socket,
+      version: "0.3.13",
+      deps: deps(),
+      package: package(),
+      description: "Socket handling library for Elixir" ]
   end
 
-  # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
+  # Configuration for the OTP application
   def application do
-    [
-      mod: {BinaryDataOverPhoenixSocket, []},
-      extra_applications: [:logger]
-    ]
+    [ applications: [:crypto, :ssl] ]
   end
 
-  # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
-  defp elixirc_paths(_),     do: ["lib", "web"]
-
-  # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
-    [
-      {:phoenix, "~> 1.3.2"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
-    ]
+    [ { :ex_doc, "~> 0.18", only: [:dev] } ]
+  end
+
+  defp package do
+    [ maintainers: ["meh"],
+      licenses: ["WTFPL"],
+      links: %{"GitHub" => "https://github.com/meh/elixir-socket"} ]
   end
 end
