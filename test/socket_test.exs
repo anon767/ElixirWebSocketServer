@@ -4,11 +4,11 @@ defmodule SocketTest do
 
 
 
-  {:ok, server} = Game.Socket.listen(4000)
+  {:ok, server} = GameServer.Socket.listen(4000)
 
   spawn(
     fn ->
-      Game.Socket.accept(
+      GameServer.Socket.accept(
         server,
         fn (client, line) ->
           client

@@ -1,4 +1,4 @@
-defmodule Game.Socket do
+defmodule GameServer.Socket do
 
   def listen(port) do
     IO.puts "listen"
@@ -17,7 +17,7 @@ defmodule Game.Socket do
     client
     |> Socket.Web.accept!
     handle(client, handler)
-    Game.Socket.accept(server, handler)
+    GameServer.Socket.accept(server, handler)
   end
 
   def handle(client, handler) do
