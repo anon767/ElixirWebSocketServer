@@ -1,7 +1,6 @@
 defmodule GameServer.Socket do
 
   def listen(port) do
-    IO.puts "listen"
     case Socket.Web.listen(port) do
       {:ok, server} -> {:ok, server}
       _ -> {:error}

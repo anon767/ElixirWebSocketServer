@@ -6,6 +6,7 @@ defmodule State.WorldTest do
     %{registry: registry}
   end
 
+
   test "init world", %{registry: registry} do
     assert State.World.lookup(registry, 0) == :error
 
@@ -14,5 +15,6 @@ defmodule State.WorldTest do
 
     State.ClientMap.put(clientMap, 1, "tom")
     assert State.ClientMap.get(clientMap, 1) == "tom"
+
   end
 end
