@@ -11,7 +11,7 @@ defmodule GameServer.ReceiveMessage do
           angle ::  size(8)
         >>
       ) do
-    %Tom.GameServer.ReceiveMessage{left: left, right: right, action: action, angle: angle}
+    %GameServer.ReceiveMessage{left: left, right: right, action: action, angle: angle}
   end
 
 
