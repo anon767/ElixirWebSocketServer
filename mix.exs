@@ -1,12 +1,12 @@
-defmodule Socket.Mixfile do
+defmodule Tom.GameServer do
   use Mix.Project
 
   def project do
-    [ app: :socket,
-      version: "0.3.13",
+    [ app: :gameServer,
+      version: "0.0.1",
       deps: deps(),
       package: package(),
-      description: "Socket handling library for Elixir" ]
+      description: "Generic Communication Server for .io games" ]
   end
 
   # Configuration for the OTP application
@@ -15,12 +15,11 @@ defmodule Socket.Mixfile do
   end
 
   defp deps do
-    [ { :ex_doc, "~> 0.18", only: [:dev] } ]
+    [ { :ex_doc, "~> 0.18", only: [:dev] } , {:socket, "~> 0.3.13"}]
   end
 
   defp package do
-    [ maintainers: ["meh"],
-      licenses: ["WTFPL"],
-      links: %{"GitHub" => "https://github.com/meh/elixir-socket"} ]
+    [ maintainers: ["anon767"],
+      licenses: ["WTFPL"] ]
   end
 end
