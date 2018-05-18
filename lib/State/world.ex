@@ -26,6 +26,10 @@ defmodule State.World do
     GenServer.cast(server, {:create, id})
   end
 
+  def apply(server, handler) do
+    GenServer.cast(server, {:apply, handler})
+  end
+
   ## Server Callbacks
 
   def init(:ok) do
@@ -34,6 +38,11 @@ defmodule State.World do
 
   def handle_call({:lookup, id}, _from, clients) do
     {:reply, Map.fetch(clients, id), clients}
+  end
+
+  def handle_cast({:apply, handler}, clients) do
+    Enum.each(clients, handler)
+    {:ok, clients}
   end
 
   def handle_cast({:create, id}, clients) do

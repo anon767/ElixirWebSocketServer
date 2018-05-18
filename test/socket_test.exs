@@ -13,7 +13,7 @@ defmodule SocketTest do
                        |> Socket.Web.recv!
     assert(send == receive)
   end
-  
+
   test "testing binary send/recv" do
     send = <<256 :: 16>>
     socket = Socket.Web.connect! "localhost", 4000

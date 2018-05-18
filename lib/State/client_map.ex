@@ -21,4 +21,9 @@ defmodule State.ClientMap do
   def put(clientMap, key, value) do
     Agent.update(clientMap, &Map.put(&1, key, value))
   end
+
+  def apply(clientMap, handler) do
+    Agent.update(clientMap, &Enum.each(&1, handler))
+  end
+
 end
