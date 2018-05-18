@@ -1,4 +1,3 @@
-
 defmodule SocketTest do
   use ExUnit.Case, async: true
 
@@ -29,16 +28,19 @@ defmodule SocketTest do
   {:text, receive} = socket
                      |> Socket.Web.recv!
 
-  assert(send == receive)
 
-  send = <<256::16>>
+    assert(send == receive)
+
+
+
+  send = <<256 :: 16>>
   Process.sleep(1000)
   IO.puts "testing binary send/recv"
   socket = Socket.Web.connect! "localhost", 4000
   socket
   |> (Socket.Web.send! {:binary, send})
   {:binary, receive} = socket
-                     |> Socket.Web.recv!
+                       |> Socket.Web.recv!
 
   assert(send == receive)
 
