@@ -3,25 +3,17 @@ defmodule State.World do
 
   ## Client API
 
-  @doc """
-  Starts the registry.
-  """
+
   def start_link(opts) do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
-  @doc """
-  Looks up the bucket pid for `name` stored in `server`.
 
-  Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.
-  """
   def lookup(server, id) do
     GenServer.call(server, {:lookup, id})
   end
 
-  @doc """
-  Ensures there is a bucket associated with the given `name` in `server`.
-  """
+
   def create(server, id) do
     GenServer.cast(server, {:create, id})
   end

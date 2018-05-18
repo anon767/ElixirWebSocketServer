@@ -5,14 +5,11 @@ defmodule GameServer.Socket do
       {:ok, server} -> {:ok, server}
       _ -> {:error}
     end
-
   end
-
 
   def accept(server, handler) do
     client = server
              |> Socket.Web.accept!
-
     client
     |> Socket.Web.accept!
     handle(client, handler)
@@ -27,8 +24,4 @@ defmodule GameServer.Socket do
       {:error, _} -> {:error}
     end
   end
-
-
-
-
 end
