@@ -1,4 +1,4 @@
-defmodule Tom.GameServer.ReceiveMessage do
+defmodule GameServer.ReceiveMessage do
   defstruct left: 0,
             right: 0,
             action: 0,
