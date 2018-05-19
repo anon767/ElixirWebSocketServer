@@ -7,21 +7,16 @@ defmodule GameServer.Socket do
     end
   end
 
-  def accept(server, handler) do
-    client = server
-             |> Socket.Web.accept!
+  def accept(client) do
     client
     |> Socket.Web.accept!
-    handle(client, handler)
-    GameServer.Socket.accept(server, handler)
+    {:ok}
   end
 
   def handle(client, handler) do
-    case client
-         |> Socket.Web.recv do
-      {:ok, incoming} ->
-        handler.(client, incoming)
-      {:error, _} -> {:error}
-    end
+    result = client
+             |> Socket.Web.recv
+
+    handler.(client, result)
   end
 end
