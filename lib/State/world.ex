@@ -28,11 +28,7 @@ defmodule State.World do
   def handle_call({:lookup, id}, _from, stateMap) do
     {:reply, Map.fetch(stateMap, id), stateMap}
   end
-
-  def handle_cast({:apply, handler}, stateMap) do
-    Enum.each(stateMap, handler)
-    {:ok, stateMap}
-  end
+  
 
   def handle_cast({:create, id}, stateMap) do
     if Map.has_key?(stateMap, id) do

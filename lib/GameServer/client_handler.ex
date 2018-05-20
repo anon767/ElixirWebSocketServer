@@ -3,8 +3,15 @@ defmodule GameServer.ClientHandler do
 
     case  opts.client
           |> Socket.Web.recv do
-      {:ok, _} ->
-        Socket.Web.send(opts.client, {:text, "hi"})
+      {:ok, line} ->
+        State.ClientMap.apply(
+          opts.clientMap,
+          fn {_, client} ->
+            client
+            |> Socket.Web.send({:text, "hi"})
+          end
+        )
+
         run(opts)
       {:error, _} ->
         opts.client

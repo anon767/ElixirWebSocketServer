@@ -7,16 +7,16 @@ defmodule GameServer do
   def init() do
     import Supervisor.Spec
     children = [
+      worker(State.World, [[name: :world]]),
       worker(GameServer.SocketServer, [4000]),
-      {State.World, name: State.World},
+      worker(State.ClientMap, [[name: State.ClientMap]]),
       supervisor(Task.Supervisor, [[name: :game_handler]], id: :game_handler)
     ]
-    Supervisor.start_link(children, strategy: :one_for_one)
 
-    #    GameServer.SocketServer.start_link(
-    #      4000,
-    #      &(GameServer.handler &1, &2)
-    #    )
+    {:ok, pid} = Supervisor.start_link(children, strategy: :one_for_one)
+
+
+
 
   end
 

@@ -16,21 +16,29 @@ defmodule GameServer.SocketServer do
   def start_link(port) do
     {:ok, socket} = GameServer.Socket.listen(port)
 
-    {:ok, spawn_link fn -> accept(socket) end}
+    State.World.create(:world, "clientMap")
+    {:ok, clientMap} = State.World.lookup(:world, "clientMap")
+
+    {:ok, spawn_link fn -> accept(socket, clientMap) end}
     GenServer.start_link(__MODULE__, :ok)
   end
 
 
 
-  def accept(socket) do
+  def accept(socket, clientMap) do
     client = socket
              |> Socket.Web.accept!
+    State.ClientMap.put(clientMap, State.ClientMap.size(clientMap) + 1, client)
+    client
+    |> Socket.Web.accept!
+    Task.Supervisor.start_child(
+      :game_handler,
+      GameServer.ClientHandler,
+      :run,
+      [%{client: client, clientMap: clientMap}]
+    )
 
-    client |> Socket.Web.accept!
-
-    Task.Supervisor.start_child(:game_handler, GameServer.ClientHandler, :run, [%{client: client}])
-
-    GameServer.SocketServer.accept(socket)
+    GameServer.SocketServer.accept(socket, clientMap)
   end
 
 
