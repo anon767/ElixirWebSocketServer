@@ -5,3 +5,8 @@ Generic Game Server
 
 * mix deps.get
 * mix test
+
+Use
+GameServer.init()
+
+to start a test Server on localhost:4000

@@ -2,26 +2,14 @@ defmodule GameServer do
   use Application
 
 
-  def handler(client) do
-    result = client
-             |> Socket.Web.recv
-    case result do
-      {:ok, line} ->
-        client
-        |> Socket.Web.send(line)
-        GameServer.handler(client)
-      {_, _} ->
-        client
-        |> Socket.Web.close
-        exit(:shutdown)
-    end
-  end
 
-  defp init() do
+
+  def init() do
     import Supervisor.Spec
     children = [
-      worker(GameServer.SocketServer, [4000, &(GameServer.handler &1)]),
-      {State.World, name: State.World}
+      worker(GameServer.SocketServer, [4000]),
+      {State.World, name: State.World},
+      supervisor(Task.Supervisor, [[name: :game_handler]], id: :game_handler)
     ]
     Supervisor.start_link(children, strategy: :one_for_one)
 

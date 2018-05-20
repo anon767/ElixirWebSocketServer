@@ -13,23 +13,26 @@ defmodule GameServer.SocketServer do
     {:ok, %{}}
   end
 
-  def start_link(port, handler) do
+  def start_link(port) do
     {:ok, socket} = GameServer.Socket.listen(port)
-    {:ok, spawn_link fn -> accept(socket, handler) end}
+
+    {:ok, spawn_link fn -> accept(socket) end}
     GenServer.start_link(__MODULE__, :ok)
   end
 
-  def accept(socket, handler) do
+
+
+  def accept(socket) do
     client = socket
              |> Socket.Web.accept!
-    GameServer.Socket.accept(client)
 
-    spawn_link fn -> GameServer.SocketServer.handle(client, handler) end
-    accept(socket, handler)
+    client |> Socket.Web.accept!
+
+    Task.Supervisor.start_child(:game_handler, GameServer.ClientHandler, :run, [%{client: client}])
+
+    GameServer.SocketServer.accept(socket)
   end
 
-  def handle(client, handler) do
-    handler.(client)
-  end
+
 
 end
